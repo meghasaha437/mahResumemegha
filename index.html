@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bank Financial Executive Resume</title>
+<style>
+:root {
+  --primary:#0b1f3a;
+  --secondary:#c89b3c;
+  --accent:#123f6d;
+  --text:#202733;
+  --muted:#657181;
+  --line:#dfe5ec;
+  --paper:#fff;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#edf1f5;color:var(--text);font-family:Arial,Helvetica,sans-serif}
+.toolbar{position:sticky;top:0;z-index:20;background:#07182d;color:#fff;padding:10px 14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.toolbar button,.toolbar select,.toolbar input[type="text"]{height:36px;border:1px solid #49627d;background:#132f50;color:#fff;border-radius:6px;padding:0 10px;font-size:12px}
+.toolbar button{cursor:pointer}
+.toolbar button:hover{background:#1c4773}
+.toolbar .group{display:flex;gap:6px;align-items:center}
+.toolbar label{font-size:11px;color:#cbd8e5}
+.color{width:42px!important;padding:3px!important;cursor:pointer}
+.hex{width:82px!important}
+.status{margin-left:auto;font-size:11px;opacity:.8}
+
+
+.wrap{padding:26px}
+.resume{width:210mm;height:297mm;margin:0 auto;background:var(--paper);display:grid;grid-template-columns:34% 66%;overflow:hidden;box-shadow:0 8px 28px #0002}
+.sidebar{background:var(--primary);color:#fff;padding:34px 28px;min-width:0}
+.main{background:#fff;padding:34px 38px;min-width:0}
+.name{font-size:28px;line-height:1.05;letter-spacing:1.5px;font-weight:800;margin-bottom:8px}
+.role{font-size:13px;color:var(--secondary);line-height:1.45;font-weight:700;text-transform:uppercase}
+.side-title{font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:var(--secondary);border-bottom:1px solid #ffffff45;padding-bottom:8px;margin:30px 0 13px}
+.contact{font-size:11px;line-height:1.75;word-break:break-word}
+.contact a{color:#fff;text-decoration:none}
+.side-list{padding:0;margin:0;list-style:none;font-size:11px;line-height:1.7}
+.side-list li{margin:7px 0;position:relative;padding-left:12px}
+.side-list li:before{content:"";width:4px;height:4px;background:var(--secondary);border-radius:50%;position:absolute;left:0;top:8px}
+.main h2{font-size:13px;letter-spacing:2px;color:var(--primary);border-bottom:2px solid var(--secondary);padding-bottom:7px;margin:0 0 13px;text-transform:uppercase}
+.section{margin-bottom:24px}
+.summary{font-size:11.5px;line-height:1.65;color:#3d4651;text-align:justify}
+.job{margin-bottom:18px}
+.job-head{display:flex;justify-content:space-between;gap:20px}
+.job-role{font-size:14px;font-weight:800;color:var(--primary)}
+.job-company{font-size:12px;color:var(--accent);font-weight:700;margin-top:3px}
+.job-date{font-size:10.5px;color:var(--muted);white-space:nowrap;font-weight:700}
+.bullets{margin:9px 0 0;padding-left:17px}
+.bullets li{font-size:10.8px;line-height:1.52;margin:5px 0;color:#3b444f}
+.edu{border-left:3px solid var(--secondary);padding-left:12px;margin:0 0 15px}
+.edu-degree{font-size:12.5px;font-weight:800;color:var(--primary)}
+.edu-meta{font-size:10.5px;color:var(--accent);margin:3px 0}
+.edu ul{margin:5px 0;padding-left:16px}
+.edu li{font-size:10.5px;line-height:1.45;margin:2px 0}
+.personal-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px 18px}
+.personal-grid div{font-size:10.5px}
+.personal-grid strong{display:block;font-size:9px;text-transform:uppercase;color:var(--muted);letter-spacing:.8px;margin-bottom:2px}
+
+
+.modal-backdrop{display:none;position:fixed;inset:0;z-index:100;background:rgba(3,12,25,.68);padding:24px;align-items:center;justify-content:center}
+.modal-backdrop.open{display:flex}
+.edit-modal{width:min(980px,96vw);max-height:92vh;background:#fff;border-radius:12px;box-shadow:0 20px 70px #0006;display:flex;flex-direction:column;overflow:hidden}
+.modal-head{display:flex;justify-content:space-between;gap:20px;padding:18px 22px;border-bottom:1px solid #e3e8ee}
+.modal-title{font-size:20px;font-weight:800;color:#0b1f3a}
+.modal-subtitle{font-size:11px;color:#687789;margin-top:4px}
+.modal-close{border:0;background:transparent;font-size:28px;line-height:1;cursor:pointer;color:#526174}
+.editor-tabs{display:flex;border-bottom:1px solid #e3e8ee;padding:0 22px}
+.editor-tab{border:0;background:transparent;padding:11px 16px;font-size:12px;font-weight:700;color:#687789;cursor:pointer;border-bottom:2px solid transparent}
+.editor-tab.active{color:#0b1f3a;border-bottom-color:#c89b3c}
+.modal-body{padding:18px 22px;overflow:auto}
+.form-section{border:1px solid #e1e6ec;border-radius:9px;padding:14px;margin-bottom:14px}
+.form-section-title{font-size:12px;font-weight:800;color:#123f6d;text-transform:uppercase;letter-spacing:.8px;margin-bottom:11px}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.form-grid label{font-size:11px;color:#536174;font-weight:700}
+.form-grid input,.form-grid textarea,.large-input,.list-input,.modal-json{width:100%;margin-top:5px;border:1px solid #cfd7e1;border-radius:6px;padding:9px;font:13px Arial,sans-serif;color:#202733;background:#fff;outline:none}
+.form-grid input:focus,.large-input:focus,.list-input:focus,.modal-json:focus{border-color:#5279a0;box-shadow:0 0 0 2px #5279a022}
+.large-input{min-height:120px;resize:vertical}
+.list-input{min-height:100px;resize:vertical}
+.experience-card,.education-card{border:1px solid #dfe5ec;border-radius:8px;padding:12px;margin-bottom:10px;background:#fafbfd}
+.card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.card-label{font-size:11px;font-weight:800;color:#123f6d}
+.remove-btn{border:1px solid #e0a0a0;background:#fff5f5;color:#a33;padding:5px 8px;border-radius:5px;font-size:10px;cursor:pointer}
+.add-btn{border:1px dashed #91a4b9;background:#f7f9fb;color:#123f6d;border-radius:6px;padding:8px 12px;font-size:11px;font-weight:700;cursor:pointer}
+.array-input{width:100%;min-height:90px;resize:vertical;border:1px solid #cfd7e1;border-radius:6px;padding:9px;font:12px Arial,sans-serif}
+.modal-json{height:390px;resize:vertical;font:12px/1.5 ui-monospace,monospace;background:#08192d;color:#dcecff}
+.json-note{font-size:10px;color:#738196;margin-top:6px}
+.modal-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 22px;border-top:1px solid #e3e8ee;background:#f8fafc}
+.edit-status{font-size:11px;color:#66768a}
+.footer-actions{display:flex;gap:8px}
+.secondary-btn,.primary-btn{border-radius:6px;padding:9px 13px;font-size:11px;font-weight:700;cursor:pointer}
+.secondary-btn{border:1px solid #ccd5df;background:#fff;color:#33465c}
+.primary-btn{border:1px solid #0b1f3a;background:#0b1f3a;color:#fff}
+@media(max-width:700px){
+ .modal-backdrop{padding:8px}.edit-modal{max-height:96vh}.form-grid{grid-template-columns:1fr}.modal-head{padding:14px}.modal-body{padding:12px}.modal-footer{flex-direction:column;align-items:stretch}.footer-actions{justify-content:flex-end;flex-wrap:wrap}
+}
+
+@media(max-width:900px){
+ .wrap{padding:10px;overflow:auto}
+ .resume{width:210mm;height:297mm;margin:auto}
+ .job-head{display:block}
+ .job-date{margin-top:4px}
+}
+@media print{
+ @page{size:A4 portrait;margin:0}
+
+ html,body{
+   width:210mm!important;
+   min-width:210mm!important;
+   height:297mm!important;
+   min-height:297mm!important;
+   margin:0!important;
+   padding:0!important;
+   background:#fff!important;
+ }
+
+ body{
+   overflow:hidden!important;
+   -webkit-print-color-adjust:exact!important;
+   print-color-adjust:exact!important;
+ }
+
+ .toolbar,
+ #jsonEditor,
+ .modal-backdrop{
+   display:none!important;
+ }
+
+ .wrap{
+   width:210mm!important;
+   min-width:210mm!important;
+   height:297mm!important;
+   min-height:297mm!important;
+   margin:0!important;
+   padding:0!important;
+   overflow:hidden!important;
+ }
+
+ .resume{
+   width:210mm!important;
+   min-width:210mm!important;
+   height:297mm!important;
+   min-height:297mm!important;
+   margin:0!important;
+   padding:0!important;
+   box-shadow:none!important;
+   overflow:hidden!important;
+   display:grid!important;
+   grid-template-columns:34% 66%!important;
+   grid-template-rows:1fr!important;
+   page-break-after:avoid!important;
+   break-after:avoid-page!important;
+ }
+
+ .sidebar{
+   display:block!important;
+   width:auto!important;
+   height:297mm!important;
+   background:var(--primary)!important;
+   color:#fff!important;
+   -webkit-print-color-adjust:exact!important;
+   print-color-adjust:exact!important;
+ }
+
+ .main{
+   display:block!important;
+   width:auto!important;
+   height:297mm!important;
+   background:#fff!important;
+   -webkit-print-color-adjust:exact!important;
+   print-color-adjust:exact!important;
+ }
+
+ *{
+   -webkit-print-color-adjust:exact!important;
+   print-color-adjust:exact!important;
+ }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <button id="reloadBtn" type="button">↻ Reload JSON</button>
+  <button id="editorBtn" type="button">✎ Edit Resume</button>
+  <label>Theme
+    <select id="themeSelect">
+      <option value="classic">Classic Navy</option>
+      <option value="executive">Executive Blue</option>
+      <option value="gold">Banking Gold</option>
+      <option value="minimal">Minimal</option>
+      <option value="corporate">Corporate Gray</option>
+      <option value="emerald">Finance Emerald</option>
+      <option value="burgundy">Premium Burgundy</option>
+      <option value="slate">Slate</option>
+      <option value="royal">Royal Blue</option>
+      <option value="teal">Modern Teal</option>
+    </select>
+  </label>
+  <div class="group">
+    <label>Primary</label>
+    <input id="primaryColor" class="color" type="color" value="#0b1f3a">
+    <input id="primaryHex" class="hex" type="text" value="#0b1f3a" maxlength="7">
+  </div>
+  <div class="group">
+    <label>Secondary</label>
+    <input id="secondaryColor" class="color" type="color" value="#c89b3c">
+    <input id="secondaryHex" class="hex" type="text" value="#c89b3c" maxlength="7">
+  </div>
+  <button id="resetColors" type="button">Reset Colors</button>
+  <button id="pdfBtn" type="button">🖨 Print / Save A4 PDF</button>
+  <label>Open JSON <input id="fileInput" type="file" accept=".json,application/json"></label>
+  <span class="status" id="status">Ready</span>
+</div>
+
+
+<div class="modal-backdrop" id="editModal" aria-hidden="true">
+  <div class="edit-modal" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+    <div class="modal-head">
+      <div>
+        <div class="modal-title" id="editModalTitle">Edit Resume</div>
+        <div class="modal-subtitle">Changes are applied to the preview first. Save only when you want to update the JSON file.</div>
+      </div>
+      <button type="button" class="modal-close" id="closeModal" aria-label="Close">×</button>
+    </div>
+
+    <div class="editor-tabs">
+      <button type="button" class="editor-tab active" data-tab="form">Form Editor</button>
+      <button type="button" class="editor-tab" data-tab="json">Raw JSON</button>
+    </div>
+
+    <div class="modal-body">
+      <div id="formPanel">
+        <div class="form-section">
+          <div class="form-section-title">Personal Information</div>
+          <div class="form-grid">
+            <label>Full Name<input id="f_name" type="text"></label>
+            <label>Professional Title<input id="f_title" type="text"></label>
+            <label>Phone<input id="f_phone" type="text"></label>
+            <label>Location<input id="f_location" type="text"></label>
+            <label>Email<input id="f_email" type="email"></label>
+            <label>LinkedIn<input id="f_linkedin" type="text"></label>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section-title">Professional Summary</div>
+          <textarea id="f_summary" class="large-input"></textarea>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section-title">Work Experience</div>
+          <div id="experienceForms"></div>
+          <button type="button" class="add-btn" id="addExperience">＋ Add Experience</button>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section-title">Education</div>
+          <div id="educationForms"></div>
+          <button type="button" class="add-btn" id="addEducation">＋ Add Education</button>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section-title">Skills</div>
+          <textarea id="f_skills" class="list-input" placeholder="One skill per line"></textarea>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section-title">Languages</div>
+          <input id="f_languages" type="text" placeholder="English, Hindi, Odia">
+        </div>
+
+        <div class="form-section">
+          <div class="form-section-title">Personal Details</div>
+          <div id="personalForms" class="form-grid"></div>
+        </div>
+      </div>
+
+      <div id="jsonPanel" style="display:none">
+        <textarea id="jsonEditor" class="modal-json" spellcheck="false"></textarea>
+        <div class="json-note">Advanced mode — edit the actual JSON structure directly.</div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <span id="editStatus" class="edit-status">Unsaved changes</span>
+      <div class="footer-actions">
+        <button type="button" class="secondary-btn" id="cancelEdit">Cancel</button>
+        <button type="button" class="secondary-btn" id="previewEdit">Apply / Preview</button>
+        <button type="button" class="primary-btn" id="saveJson">Save JSON File</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="wrap">
+<div class="resume" id="resume">
+<aside class="sidebar">
+  <div class="name" id="name"></div>
+  <div class="role" id="title"></div>
+  <div class="side-title">Contact</div>
+  <div class="contact" id="contact"></div>
+  <div class="side-title">Core Skills</div>
+  <ul class="side-list" id="skills"></ul>
+  <div class="side-title">Languages</div>
+  <ul class="side-list" id="languages"></ul>
+  <div class="side-title">Personal Details</div>
+  <div class="contact" id="personal"></div>
+</aside>
+<main class="main">
+  <section class="section"><h2>Professional Summary</h2><div class="summary" id="summary"></div></section>
+  <section class="section"><h2>Work History</h2><div id="experience"></div></section>
+  <section class="section"><h2>Education</h2><div id="education"></div></section>
+</main>
+</div>
+</div>
+
+<script>
+
+let resumeData = null;
+
+const initial = {"personal": {"name": "MEGHA SAHA", "title": "Deputy Manager | Branch Relationship Officer", "phone": "978698105", "location": "Jaleswar, Odisha 756032", "email": "meghasaha437@gmail.com", "linkedin": "linkedin.com/in/megha-saha-b5966122a"}, "summary": "Experienced Deputy Manager with a robust background in banking operations, specializing in digital transaction processing, account management, and compliance. Proven expertise in NEFT/RTGS fund transfers, demand draft handling, Insta Kit distribution, and onboarding for various account types. Adept at collaborating across teams to enhance service delivery, troubleshoot system issues, and ensure seamless, compliant operations. Passionate about leveraging operational acumen and financial product knowledge to drive innovation in the FinTech space. Seeking to contribute to technology-driven financial solutions that improve customer experiences and operational efficiency.", "experience": [{"role": "DEPUTY MANAGER", "period": "08/2022 - Current", "company": "Axis Bank", "location": "Baripada, India", "achievements": ["Digital Payments & Transactions: Managed NEFT/RTGS processing using core banking systems and digital payment platforms; ensured secure, real-time fund transfers and regulatory compliance.", "Account Onboarding & KYC Compliance: Oversaw Insta Kit distribution and digital onboarding for CASA accounts; ensured full adherence to KYC, AML, and RBI guidelines.", "Demand Draft & Cheque Processing: Handled DD issuance and cheque dropbox operations; optimized transaction workflows for accuracy and audit readiness.", "Customer Support & Issue Resolution: Resolved technical/service issues, improving customer satisfaction scores; collaborated with IT and support teams on service enhancements.", "Sales & Cross-Selling: Promoted banking and digital financial products; leveraged CRM tools and customer insights to drive product adoption.", "Branch Operations & Process Optimization: Supervised daily operations; improved efficiency, accuracy, and data integrity through workflow optimization and quality control.", "Team Leadership & Training: Mentored junior staff; supported digital skill development and encouraged collaboration on tech-driven tasks and projects.", "Inventory & Vendor Management: Monitored stock of financial instruments and coordinated with vendors to ensure timely delivery and operational continuity.", "Strategic Planning & Communication: Partnered with senior management to develop business growth strategies; contributed insights on digital transformation and customer behavior."]}], "education": [{"degree": "Masters In Commerce", "field": "Accounting", "institution": "North Odisha University", "location": "Baripada, India", "date": "01/2021", "details": ["Graduation with Distinction", "Honours in Accounting.", "GPA: 8.75 (C.G.P.A)"]}, {"degree": "B. Com", "field": "Accounting", "institution": "North Odisha University", "location": "Baripada, India", "date": "01/2019", "details": ["Graduation with Distinction", "Ranked 1 in our college", "Honours in Accounting.", "GPA: 8.17 (C.G.P.A)"]}], "skills": ["Certified by IRDAI", "Excel data analysis skills", "Risk assessment", "Budget optimization", "Customer relationship management (CRM)", "Sales approach development", "Skilled in Microsoft Office suite", "Certified by UIDAI", "Financial management", "Relationship management", "Project management"], "languages": ["English", "Odia", "Hindi"], "personalDetails": {"Date of Birth": "1999-01-17", "Marital Status": "Unmarried", "Nationality": "Indian", "Religion": "Hinduism"}};
+
+const themes = {
+  classic:{primary:"#0b1f3a",secondary:"#c89b3c",accent:"#123f6d"},
+  executive:{primary:"#102a43",secondary:"#6ea8dc",accent:"#1d4e89"},
+  gold:{primary:"#2b2118",secondary:"#c89b3c",accent:"#76551e"},
+  minimal:{primary:"#252525",secondary:"#888888",accent:"#444444"},
+  corporate:{primary:"#263238",secondary:"#90a4ae",accent:"#455a64"},
+  emerald:{primary:"#123c35",secondary:"#b6a05a",accent:"#176b5c"},
+  burgundy:{primary:"#3b1722",secondary:"#c9a66b",accent:"#702d3f"},
+  slate:{primary:"#263447",secondary:"#9aa9b8",accent:"#53677f"},
+  royal:{primary:"#14245c",secondary:"#d1b15a",accent:"#2848a5"},
+  teal:{primary:"#103c46",secondary:"#d2a84a",accent:"#147d83"}
+};
+
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+
+function esc(s){
+  return String(s ?? "").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+}
+function validHex(v){ return /^#[0-9a-fA-F]{6}$/.test(v); }
+
+function applyColors(primary,secondary,accent){
+  if(validHex(primary)) document.documentElement.style.setProperty("--primary",primary);
+  if(validHex(secondary)) document.documentElement.style.setProperty("--secondary",secondary);
+  if(validHex(accent)) document.documentElement.style.setProperty("--accent",accent);
+  $("#primaryColor").value=validHex(primary)?primary:"#0b1f3a";
+  $("#primaryHex").value=validHex(primary)?primary:"#0b1f3a";
+  $("#secondaryColor").value=validHex(secondary)?secondary:"#c89b3c";
+  $("#secondaryHex").value=validHex(secondary)?secondary:"#c89b3c";
+}
+
+function setTheme(name){
+  const t=themes[name]||themes.classic;
+  $("#themeSelect").value=name;
+  applyColors(t.primary,t.secondary,t.accent);
+  if(resumeData){
+    resumeData.theme=resumeData.theme||{};
+    resumeData.theme.selected=name;
+    resumeData.theme.primary=t.primary;
+    resumeData.theme.secondary=t.secondary;
+    resumeData.theme.accent=t.accent;
+  }
+}
+
+function setCustomColor(which,value){
+  value=value.trim();
+  if(!validHex(value)) return;
+  document.documentElement.style.setProperty("--"+which,value);
+  if(which==="primary") $("#primaryColor").value=value;
+  if(which==="secondary") $("#secondaryColor").value=value;
+  resumeData=resumeData||{};
+  resumeData.theme=resumeData.theme||{};
+  resumeData.theme.selected="custom";
+  resumeData.theme[which]=value;
+}
+
+function render(d){
+  resumeData=structuredClone(d||{});
+  const p=resumeData.personal||{};
+  $("#name").textContent=p.name||"";
+  $("#title").textContent=p.title||"";
+  $("#contact").innerHTML=[
+    p.phone,p.location,
+    p.email?`<a href="mailto:${esc(p.email)}">${esc(p.email)}</a>`:"",
+    p.linkedin?`<a href="https://${esc(p.linkedin)}" target="_blank">${esc(p.linkedin)}</a>`:""
+  ].filter(Boolean).join("<br>");
+  $("#summary").textContent=resumeData.summary||"";
+  $("#skills").innerHTML=(resumeData.skills||[]).map(x=>`<li>${esc(x)}</li>`).join("");
+  $("#languages").innerHTML=(resumeData.languages||[]).map(x=>`<li>${esc(x)}</li>`).join("");
+  $("#personal").innerHTML=Object.entries(resumeData.personalDetails||{})
+    .map(([k,v])=>`<div><strong>${esc(k)}</strong>${esc(v)}</div>`).join("<br>");
+
+  $("#experience").innerHTML=(resumeData.experience||[]).map(j=>`
+    <div class="job">
+      <div class="job-head">
+        <div>
+          <div class="job-role">${esc(j.role)}</div>
+          <div class="job-company">${esc(j.company)} · ${esc(j.location)}</div>
+        </div>
+        <div class="job-date">${esc(j.period)}</div>
+      </div>
+      <ul class="bullets">${(j.achievements||[]).map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+    </div>`).join("");
+
+  $("#education").innerHTML=(resumeData.education||[]).map(e=>`
+    <div class="edu">
+      <div class="edu-degree">${esc(e.degree)}: ${esc(e.field)}</div>
+      <div class="edu-meta">${esc(e.institution)} · ${esc(e.location)} · ${esc(e.date)}</div>
+      <ul>${(e.details||[]).map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+    </div>`).join("");
+
+  const th=resumeData.theme||{};
+  if(th.selected==="custom") applyColors(th.primary||"#0b1f3a",th.secondary||"#c89b3c",th.accent||"#123f6d");
+  else setTheme(th.selected||"classic");
+
+  $("#status").textContent="Resume loaded";
+}
+
+function openEditor(){
+  populateForm(resumeData||initial);
+  $("#editModal").classList.add("open");
+  $("#editModal").setAttribute("aria-hidden","false");
+  $("#f_name").focus();
+}
+function closeEditor(){
+  $("#editModal").classList.remove("open");
+  $("#editModal").setAttribute("aria-hidden","true");
+}
+
+function populateForm(d){
+  const p=d.personal||{};
+  $("#f_name").value=p.name||"";
+  $("#f_title").value=p.title||"";
+  $("#f_phone").value=p.phone||"";
+  $("#f_location").value=p.location||"";
+  $("#f_email").value=p.email||"";
+  $("#f_linkedin").value=p.linkedin||"";
+  $("#f_summary").value=d.summary||"";
+  $("#f_skills").value=(d.skills||[]).join("\n");
+  $("#f_languages").value=(d.languages||[]).join(", ");
+
+  const pf=$("#personalForms");
+  pf.innerHTML="";
+  Object.entries(d.personalDetails||{}).forEach(([k,v])=>addPersonal(k,v));
+
+  renderExperienceForms(d.experience||[]);
+  renderEducationForms(d.education||[]);
+  $("#jsonEditor").value=JSON.stringify(d,null,2);
+  $("#editStatus").textContent="Editing — changes are not saved yet";
+}
+
+function addPersonal(k="",v=""){
+  const div=document.createElement("div");
+  div.innerHTML=`<label>${esc(k||"Detail")}<input class="personal-value" data-key="${esc(k)}" value="${esc(v)}"></label>`;
+  $("#personalForms").appendChild(div);
+}
+
+function renderExperienceForms(items){
+  $("#experienceForms").innerHTML="";
+  items.forEach((x,i)=>addExperienceCard(x,i));
+}
+function addExperienceCard(x={},i){
+  const card=document.createElement("div");
+  card.className="experience-card";
+  card.innerHTML=`
+    <div class="card-top"><span class="card-label">Experience ${i+1}</span><button type="button" class="remove-btn">Remove</button></div>
+    <div class="form-grid">
+      <label>Role<input class="x-role" value="${esc(x.role)}"></label>
+      <label>Period<input class="x-period" value="${esc(x.period)}"></label>
+      <label>Company<input class="x-company" value="${esc(x.company)}"></label>
+      <label>Location<input class="x-location" value="${esc(x.location)}"></label>
+    </div>
+    <label style="display:block;margin-top:10px;font-size:11px;color:#536174;font-weight:700">
+      Responsibilities / Achievements
+      <textarea class="array-input x-achievements" placeholder="One achievement per line">${esc((x.achievements||[]).join("\n"))}</textarea>
+    </label>`;
+  card.querySelector(".remove-btn").addEventListener("click",()=>{
+    card.remove(); renumberCards("experienceForms","Experience");
+  });
+  $("#experienceForms").appendChild(card);
+}
+function renderEducationForms(items){
+  $("#educationForms").innerHTML="";
+  items.forEach((x,i)=>addEducationCard(x,i));
+}
+function addEducationCard(x={},i){
+  const card=document.createElement("div");
+  card.className="education-card";
+  card.innerHTML=`
+    <div class="card-top"><span class="card-label">Education ${i+1}</span><button type="button" class="remove-btn">Remove</button></div>
+    <div class="form-grid">
+      <label>Degree<input class="e-degree" value="${esc(x.degree)}"></label>
+      <label>Field<input class="e-field" value="${esc(x.field)}"></label>
+      <label>Institution<input class="e-institution" value="${esc(x.institution)}"></label>
+      <label>Location<input class="e-location" value="${esc(x.location)}"></label>
+      <label>Date<input class="e-date" value="${esc(x.date)}"></label>
+    </div>
+    <label style="display:block;margin-top:10px;font-size:11px;color:#536174;font-weight:700">
+      Details
+      <textarea class="array-input e-details" placeholder="One detail per line">${esc((x.details||[]).join("\n"))}</textarea>
+    </label>`;
+  card.querySelector(".remove-btn").addEventListener("click",()=>{
+    card.remove(); renumberCards("educationForms","Education");
+  });
+  $("#educationForms").appendChild(card);
+}
+function renumberCards(id,label){
+  $$("#"+id+" .card-label").forEach((x,i)=>x.textContent=label+" "+(i+1));
+}
+
+function collectForm(){
+  const d=structuredClone(resumeData||{});
+  d.personal={
+    name:$("#f_name").value.trim(),
+    title:$("#f_title").value.trim(),
+    phone:$("#f_phone").value.trim(),
+    location:$("#f_location").value.trim(),
+    email:$("#f_email").value.trim(),
+    linkedin:$("#f_linkedin").value.trim()
+  };
+  d.summary=$("#f_summary").value.trim();
+  d.skills=$("#f_skills").value.split("\n").map(x=>x.trim()).filter(Boolean);
+  d.languages=$("#f_languages").value.split(",").map(x=>x.trim()).filter(Boolean);
+  d.personalDetails={};
+  $$(".personal-value").forEach(input=>{
+    const key=input.dataset.key.trim();
+    if(key) d.personalDetails[key]=input.value.trim();
+  });
+  d.experience=$$("#experienceForms .experience-card").map(c=>({
+    role:c.querySelector(".x-role").value.trim(),
+    period:c.querySelector(".x-period").value.trim(),
+    company:c.querySelector(".x-company").value.trim(),
+    location:c.querySelector(".x-location").value.trim(),
+    achievements:c.querySelector(".x-achievements").value.split("\n").map(x=>x.trim()).filter(Boolean)
+  }));
+  d.education=$$("#educationForms .education-card").map(c=>({
+    degree:c.querySelector(".e-degree").value.trim(),
+    field:c.querySelector(".e-field").value.trim(),
+    institution:c.querySelector(".e-institution").value.trim(),
+    location:c.querySelector(".e-location").value.trim(),
+    date:c.querySelector(".e-date").value.trim(),
+    details:c.querySelector(".e-details").value.split("\n").map(x=>x.trim()).filter(Boolean)
+  }));
+  d.theme=d.theme||{};
+  d.theme.selected=$("#themeSelect").value;
+  d.theme.primary=getComputedStyle(document.documentElement).getPropertyValue("--primary").trim();
+  d.theme.secondary=getComputedStyle(document.documentElement).getPropertyValue("--secondary").trim();
+  d.theme.accent=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim();
+  return d;
+}
+
+function applyFormPreview(){
+  render(collectForm());
+  $("#editStatus").textContent="Preview updated — JSON file has NOT been saved";
+}
+
+function saveJsonFile(){
+  const d=collectForm();
+  const blob=new Blob([JSON.stringify(d,null,2)],{type:"application/json;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url; a.download="resume.json"; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  resumeData=d;
+  $("#jsonEditor").value=JSON.stringify(d,null,2);
+  $("#editStatus").textContent="JSON file downloaded successfully";
+  $("#status").textContent="JSON saved/downloaded";
+}
+
+async function reloadJSON(){
+  try{
+    const r=await fetch("resume.json?"+Date.now());
+    if(!r.ok) throw new Error();
+    render(await r.json());
+  }catch(e){
+    $("#status").textContent="Direct-file mode: use Open JSON";
+  }
+}
+
+function printResume(){
+  closeEditor();
+  setTimeout(()=>window.print(),100);
+}
+
+$("#editorBtn").addEventListener("click",openEditor);
+$("#closeModal").addEventListener("click",closeEditor);
+$("#cancelEdit").addEventListener("click",closeEditor);
+$("#previewEdit").addEventListener("click",applyFormPreview);
+$("#saveJson").addEventListener("click",saveJsonFile);
+$("#reloadBtn").addEventListener("click",reloadJSON);
+$("#pdfBtn").addEventListener("click",printResume);
+
+$("#themeSelect").addEventListener("change",e=>setTheme(e.target.value));
+$("#primaryColor").addEventListener("input",e=>setCustomColor("primary",e.target.value));
+$("#secondaryColor").addEventListener("input",e=>setCustomColor("secondary",e.target.value));
+$("#primaryHex").addEventListener("change",e=>setCustomColor("primary",e.target.value));
+$("#secondaryHex").addEventListener("change",e=>setCustomColor("secondary",e.target.value));
+$("#resetColors").addEventListener("click",()=>setTheme($("#themeSelect").value));
+
+$("#addExperience").addEventListener("click",()=>addExperienceCard({}, $$("#experienceForms .experience-card").length));
+$("#addEducation").addEventListener("click",()=>addEducationCard({}, $$("#educationForms .education-card").length));
+
+$$(".editor-tab").forEach(tab=>tab.addEventListener("click",()=>{
+  $$(".editor-tab").forEach(x=>x.classList.remove("active"));
+  tab.classList.add("active");
+  const form=tab.dataset.tab==="form";
+  $("#formPanel").style.display=form?"block":"none";
+  $("#jsonPanel").style.display=form?"none":"block";
+}));
+
+$("#jsonEditor").addEventListener("input",e=>{
+  try{
+    const d=JSON.parse(e.target.value);
+    render(d);
+    $("#editStatus").textContent="Raw JSON preview — not saved";
+  }catch(e){
+    $("#editStatus").textContent="Invalid JSON";
+  }
+});
+
+$("#editModal").addEventListener("click",e=>{
+  if(e.target===$("#editModal")) closeEditor();
+});
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape" && $("#editModal").classList.contains("open")) closeEditor();
+});
+
+render(initial);
+
+</script>
+</body>
+</html>
