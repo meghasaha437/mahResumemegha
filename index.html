@@ -31,11 +31,11 @@ html,body{margin:0;padding:0;background:#edf1f5;color:var(--text);font-family:Ar
 .resume{width:210mm;height:297mm;margin:0 auto;background:var(--paper);display:grid;grid-template-columns:34% 66%;overflow:hidden;box-shadow:0 8px 28px #0002}
 .sidebar{background:var(--primary);color:#fff;padding:34px 28px;min-width:0}
 .main{background:#fff;padding:34px 38px;min-width:0}
-.name{font-size:28px;line-height:1.05;letter-spacing:1.5px;font-weight:800;margin-bottom:8px}
+.photo-section{display:none;float:left;width:88px;height:110px;margin:0 14px 8px 0;justify-content:flex-start;align-items:flex-start}.photo-wrap{position:relative;width:88px;height:110px;border:2px solid #dfe5ec;display:block;overflow:hidden;background:#f5f7fa;padding:3px}.sidebar .side-title:first-of-type{clear:both}.photo-wrap img{width:100%;height:100%;object-fit:cover;display:block}.name{font-size:26px;line-height:1.05;letter-spacing:1.5px;font-weight:800;margin-bottom:8px}
 .role{font-size:13px;color:var(--secondary);line-height:1.45;font-weight:700;text-transform:uppercase}
 .side-title{font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:var(--secondary);border-bottom:1px solid #ffffff45;padding-bottom:8px;margin:30px 0 13px}
 .contact{font-size:11px;line-height:1.75;word-break:break-word}
-.contact a{color:#fff;text-decoration:none}
+.contact a{color:#fff;text-decoration:none}.contact-item{display:flex;align-items:flex-start;gap:7px;margin:6px 0;line-height:1.45}.contact-icon{flex:0 0 20px;width:20px;height:20px;border:1px solid #ffffff55;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--secondary);margin-top:1px}.contact-item span:last-child,.contact-item a{min-width:0;word-break:break-word}
 .side-list{padding:0;margin:0;list-style:none;font-size:11px;line-height:1.7}
 .side-list li{margin:7px 0;position:relative;padding-left:12px}
 .side-list li:before{content:"";width:4px;height:4px;background:var(--secondary);border-radius:50%;position:absolute;left:0;top:8px}
@@ -240,6 +240,7 @@ html,body{margin:0;padding:0;background:#edf1f5;color:var(--text);font-family:Ar
             <label>Location<input id="f_location" type="text"></label>
             <label>Email<input id="f_email" type="email"></label>
             <label>LinkedIn<input id="f_linkedin" type="text"></label>
+            <label>Passport Photo<input id="f_photo" type="file" accept="image/*"></label>
           </div>
         </div>
 
@@ -297,6 +298,7 @@ html,body{margin:0;padding:0;background:#edf1f5;color:var(--text);font-family:Ar
 <div class="wrap">
 <div class="resume" id="resume">
 <aside class="sidebar">
+  <div class="photo-section" id="photoSection"><div class="photo-wrap"><img id="passportPhoto" alt="Passport Photo"></div></div>
   <div class="name" id="name"></div>
   <div class="role" id="title"></div>
   <div class="side-title">Contact</div>
@@ -384,10 +386,12 @@ function render(d){
   $("#name").textContent=p.name||"";
   $("#title").textContent=p.title||"";
   $("#contact").innerHTML=[
-    p.phone,p.location,
-    p.email?`<a href="mailto:${esc(p.email)}">${esc(p.email)}</a>`:"",
-    p.linkedin?`<a href="https://${esc(p.linkedin)}" target="_blank">${esc(p.linkedin)}</a>`:""
-  ].filter(Boolean).join("<br>");
+    p.phone?`<div class="contact-item"><span class="contact-icon">☎</span><span>${esc(p.phone)}</span></div>`:"",
+    p.location?`<div class="contact-item"><span class="contact-icon">⌖</span><span>${esc(p.location)}</span></div>`:"",
+    p.email?`<div class="contact-item"><span class="contact-icon">✉</span><a href="mailto:${esc(p.email)}">${esc(p.email)}</a></div>`:"",
+    p.linkedin?`<div class="contact-item"><span class="contact-icon">in</span><a href="https://${esc(p.linkedin)}" target="_blank">${esc(p.linkedin)}</a></div>`:""
+  ].filter(Boolean).join("");
+  if(resumeData.personal?.photo){ $("#passportPhoto").src=resumeData.personal.photo; $("#photoSection").style.display="block"; } else { $("#passportPhoto").removeAttribute("src"); $("#photoSection").style.display="none"; }
   $("#summary").textContent=resumeData.summary||"";
   $("#skills").innerHTML=(resumeData.skills||[]).map(x=>`<li>${esc(x)}</li>`).join("");
   $("#languages").innerHTML=(resumeData.languages||[]).map(x=>`<li>${esc(x)}</li>`).join("");
@@ -439,6 +443,7 @@ function populateForm(d){
   $("#f_location").value=p.location||"";
   $("#f_email").value=p.email||"";
   $("#f_linkedin").value=p.linkedin||"";
+  $("#f_photo").value="";
   $("#f_summary").value=d.summary||"";
   $("#f_skills").value=(d.skills||[]).join("\n");
   $("#f_languages").value=(d.languages||[]).join(", ");
@@ -520,7 +525,8 @@ function collectForm(){
     phone:$("#f_phone").value.trim(),
     location:$("#f_location").value.trim(),
     email:$("#f_email").value.trim(),
-    linkedin:$("#f_linkedin").value.trim()
+    linkedin:$("#f_linkedin").value.trim(),
+    photo:resumeData?.personal?.photo||""
   };
   d.summary=$("#f_summary").value.trim();
   d.skills=$("#f_skills").value.split("\n").map(x=>x.trim()).filter(Boolean);
@@ -628,6 +634,21 @@ $("#editModal").addEventListener("click",e=>{
 });
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape" && $("#editModal").classList.contains("open")) closeEditor();
+});
+
+$("#f_photo").addEventListener("change",e=>{
+  const file=e.target.files?.[0];
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    resumeData=resumeData||{};
+    resumeData.personal=resumeData.personal||{};
+    resumeData.personal.photo=reader.result;
+    $("#passportPhoto").src=reader.result;
+    $("#photoSection").style.display="block";
+    $("#editStatus").textContent="Passport photo selected — Apply / Preview to use it";
+  };
+  reader.readAsDataURL(file);
 });
 
 render(initial);
